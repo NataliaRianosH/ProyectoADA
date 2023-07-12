@@ -44,8 +44,6 @@ def espectaculo(n,m,k,animales,apertura,partes):
 
     algoritmosOrden.insertion_sort(partes,sumasTotales(partes))           
 
-
-
     #pasar valores de apertura a animales
     transformarArreglo(apertura,animales,'numero')
     #pasar valores de partes a animales
@@ -53,17 +51,16 @@ def espectaculo(n,m,k,animales,apertura,partes):
         transformarArreglo(elemento,animales,'numero')
 
     imprimir(apertura,partes,sumasDeEscenas)         
-        
-
+      
     return 
 
-def imprimir(A,B,sumas):
-    print('El orden en el que se debe presentar el espectaculo es:\nApertura: ', A)
+def imprimir(apertura,partes,sumas):
+    print('El orden en el que se debe presentar el espectaculo es:\nApertura: ', apertura)
     conta=0
-    for parte in B:
+    for parte in partes:
       conta+=1
       print('\nParte',conta,': ', parte)
-    promedio=  sum(sumas)/len(sumas)
+    promedio= sum(sumas)/len(sumas)
     
     #primero debemos ordenar el arreglo de sumas para que el indice
     algoritmosOrden.insertion_sort(sumas,sumas)
@@ -75,8 +72,14 @@ def imprimir(A,B,sumas):
            menor= sumas[j]
         else:
            mayor= sumas[j]   
-    menor= A[sumas.index(menor)]
-    mayor= A[sumas.index(mayor)]
+    menor= apertura[sumas.index(menor)]
+    mayor= apertura[sumas.index(mayor)]
+
+    masRepetidos, max = animalMasRepetido(apertura, partes)
+    print("\nEl animal que participo en mas escenas dentro del espectaculo fue", ", ".join(masRepetidos), "con", max, "escenas.")
+    
+    menosRepetidos, min = animalMenosRepetido(apertura, partes)
+    print("\nEl animal que participo en menos escenas dentro del espectaculo fue", ", ".join(menosRepetidos), "con", min, "escenas.")
 
     print('\nLa escena de menor grandeza total fue la escena ',menor)
     print('\nLa escena de mayor grandeza total fue la escena',mayor)        
@@ -90,7 +93,6 @@ def sumaEscena(A):
    for escena in A:
       totalSumas.append(sum(escena))
    return totalSumas   
-
 
 #[[24],[18]]
 #suma total de cada parte
@@ -117,5 +119,60 @@ def transformarArreglo(A,animales,opcion):
                 A[i][j] = animal[0]
                 break
 
-
 #espectaculo(n,m,k,animales,apertura,partes)
+
+def animalMasRepetido(apertura, partes):
+    conteo_animales = {}
+
+    # Contar la cantidad de veces que aparece cada animal en la apertura
+    for escena in apertura:
+        for animal in escena:
+            if animal in conteo_animales:
+                conteo_animales[animal] += 1
+            else:
+                conteo_animales[animal] = 1
+
+    # Contar la cantidad de veces que aparece cada animal en las partes
+    for parte in partes:
+        for escena in parte:
+            for animal in escena:
+                if animal in conteo_animales:
+                    conteo_animales[animal] += 1
+                else:
+                    conteo_animales[animal] = 1
+
+    # Encontrar la cantidad máxima de repeticiones
+    max_repeticiones = max(conteo_animales.values())
+
+    # Obtener los animales con la cantidad máxima de repeticiones
+    animales_mas_repetidos = [animal for animal, repeticiones in conteo_animales.items() if repeticiones == max_repeticiones]
+
+    return animales_mas_repetidos, max_repeticiones
+
+def animalMenosRepetido(apertura, partes):
+    conteo_animales = {}
+
+    # Contar la cantidad de veces que aparece cada animal en la apertura
+    for escena in apertura:
+        for animal in escena:
+            if animal in conteo_animales:
+                conteo_animales[animal] += 1
+            else:
+                conteo_animales[animal] = 1
+
+    # Contar la cantidad de veces que aparece cada animal en las partes
+    for parte in partes:
+        for escena in parte:
+            for animal in escena:
+                if animal in conteo_animales:
+                    conteo_animales[animal] += 1
+                else:
+                    conteo_animales[animal] = 1
+
+    # Encontrar la cantidad mínima de repeticiones
+    min_repeticiones = min(conteo_animales.values())
+
+    # Obtener los animales con la cantidad mínima de repeticiones
+    animales_menos_repetidos = [animal for animal, repeticiones in conteo_animales.items() if repeticiones == min_repeticiones]
+
+    return animales_menos_repetidos, min_repeticiones
