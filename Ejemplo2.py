@@ -1,4 +1,5 @@
 import main
+#EJEMPLO INPUT1
 n = 6
 
 m = 3
