@@ -1,6 +1,5 @@
 import algoritmosOrden
 
-
 """
 #funcion: transformarArreglo
 #parametros: arreglo: el arreglo sea de numeros,
@@ -11,8 +10,7 @@ import algoritmosOrden
                      m=tamañanoDeSubarreglo
                      como los subarreglos siempre serán de tamaño 3 (porque cada escena tiene 3 animales)
                      concluimos que la complejidad solo depende de n.
-                     es decir O
-
+                     es decir O(n)
 """
 def transformarArreglo(arreglo, animales, opcion):
     animal_dict = dict(animales)
@@ -27,12 +25,44 @@ def transformarArreglo(arreglo, animales, opcion):
                         arreglo[i][j] = key
                         break
     return arreglo
-
 #print(transformarArreglo([["gato","libelula","ciempies"]],[("gato", 3),("libelula", 2),("ciempies", 1),("nutria", 6),("perro", 4),("tapir", 5)],'animal'))
 #print(transformarArreglo([[2,3,4],[3,4,5]],[("gato", 3),("libelula", 2),("ciempies", 1),("nutria", 6),("perro", 4),("tapir", 5)],'numero'))
 
 
+"""
+#Funcion: sumaEscena(parte) -> retorna una lista con la suma los elementos de las escenas
+#Parametros: parte: una parte es una lista que se compone de escenas
+#complejidad: todas las escenas son de tamaño 3, por lo que la complejidad depende
+              de la cantidad de escenas que hay en la lista "parte", 
+              es decir O(n)
+"""
+def sumaEscena(listaDeEscenas):
+   totalSumas=[]
+   for escena in listaDeEscenas:
+      totalSumas.append(sum(escena))
+   return totalSumas  
+#print(sumaEscena([[1,2,3], [1,2,3]])) #[6,6]
 
+#[[24],[18]]
+#suma total de cada parte
+
+"""
+#funcion: sumasTotales(listaDePartes)-> lista con la grandeza total de cada parte
+#parametros: listaDeParte: Es la lista que contiene todas las partes del acto, cada una de estas partes
+             está consituida por escenas de tamaño 3.
+#complejidad: O(n) la complejidad solo depende del tamaño de la listaDePartes              
+"""
+def sumasTotales(listaDePartes):
+    sumatorias = []
+    for parte in listaDePartes:
+        sumaParte = sum(sumaEscena(parte)) 
+        sumatorias.append(sumaParte)
+    return sumatorias  
+print(sumasTotales([ [[1,2,3],[2,3,4]] , [[1,2,3]] ]))
+
+"""
+#funcion: espectaculo
+"""
 def espectaculo(n,m,k,animales,apertura,partes):
     #pasar animales de apertura a numeros
     transformarArreglo(apertura,animales,'animal')
@@ -99,32 +129,10 @@ def imprimir(apertura,partes,sumas):
     print('\nEl promedio de grandeza de todo el espectaculo fue de: ',promedio)
     return
 
-#[15, 12, 9, 6]
-#sumas de cada escena
-def sumaEscena(A):
-   totalSumas=[]
-   for escena in A:
-      totalSumas.append(sum(escena))
-   return totalSumas   
-
-#[[24],[18]]
-#suma total de cada parte
-def sumasTotales(A):
-  sumatorias=[]
-  for parte in A:
-    suma=[]
-    for escena in parte:
-      suma.append(sum(escena))
-    sumaParte= sum(suma)
-    sumatorias.append(sumaParte)
-  return sumatorias  
-
-
 #espectaculo(n,m,k,animales,apertura,partes)
 
 def animalMasRepetido(apertura, partes):
     conteo_animales = {}
-
     # Contar la cantidad de veces que aparece cada animal en la apertura
     for escena in apertura:
         for animal in escena:
@@ -132,8 +140,8 @@ def animalMasRepetido(apertura, partes):
                 conteo_animales[animal] += 1
             else:
                 conteo_animales[animal] = 1
-
     # Contar la cantidad de veces que aparece cada animal en las partes
+    
     for parte in partes:
         for escena in parte:
             for animal in escena:
