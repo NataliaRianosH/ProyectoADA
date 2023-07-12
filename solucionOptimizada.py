@@ -98,7 +98,7 @@ def ordenarApertura(apertura, m, k):
 #print(ordenarApertura(apertura, 4, 3))
 
 
-def espectaculo(m, k, apertura, partes):
+def espectaculo(n, m, k, animales, apertura, partes):
     return ordenarApertura(apertura, m, k) , ordenarListaDePartes(partes, m ,k)
 
 print(espectaculo(4, 3, apertura, partes)[0])

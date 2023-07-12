@@ -1,4 +1,8 @@
 import main
+import time
+
+inicio = time.time()
+
 n = 6
 m = 3
 k = 2
@@ -19,3 +23,6 @@ partes = [[['tapir', 'nutria', 'perro'],['ciempies', 'tapir', 'gato']],
          ]
 
 main.espectaculo(n,m,k,animales,apertura,partes)
+
+final = time.time()
+print (final-inicio)

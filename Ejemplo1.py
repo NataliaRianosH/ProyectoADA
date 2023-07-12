@@ -1,4 +1,7 @@
 import main 
+import time
+
+inicio = time.time()
 
 n = 9
 m = 4
@@ -30,3 +33,6 @@ print("traduccion c: ", main.transformarArreglo(
 partes = [parte1, parte2, parte3]
 
 main.espectaculo(n,m,k,animales,apertura,partes)
+
+final = time.time()
+print (final-inicio)

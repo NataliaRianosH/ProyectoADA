@@ -1,4 +1,8 @@
 import main
+import time
+
+inicio = time.time()
+
 n = 9
 m = 4
 k = 3
@@ -26,3 +30,6 @@ parte3 = [["boa", "caiman", "capibara"], ["leon", "caiman", "loro"], ["leon", "c
 partes=[parte3, parte2,parte1]
 
 main.espectaculo(n,m,k,animales,apertura,partes)
+
+final = time.time()
+print (final-inicio)
