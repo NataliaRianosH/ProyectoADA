@@ -1,10 +1,12 @@
 #la escena siempre tendrá 3 elementos, tonces:
 apertura=[[3, 1, 2], [4, 3, 1], [5, 1, 2], [7, 5, 2], [8, 2, 1], [9, 3, 2], [9, 5, 4], [9, 7, 6], [8, 6, 7]]
-partes=[ [[3, 1, 2], [4, 3, 1], [5, 1, 2]],
+partes=[ 
+         [[3, 1, 2], [8, 2, 1], [8, 6, 7]],
          [[7, 5, 2], [9, 7, 6], [5, 1, 2]],
          [[4, 3, 1], [9, 3, 2], [9, 5, 4]]
          ]
-#O(1)
+
+#O(1) las escenas siempre van a tener 3 animales
 def ordenarEscena(nums):
     if nums[0] > nums[1]:
         nums[0], nums[1] = nums[1], nums[0]
@@ -42,8 +44,6 @@ def ordenarParte(parte, k):
 #print(ordenarParte([[3,3,3],[1,3,1],[2,3,2],[4,3,4]], 4))
 #print(ordenarParte([[3, 1, 2], [4, 3, 1], [5, 1, 2], [7, 5, 2], [8, 2, 1], [9, 3, 2], [9, 5, 4], [9, 7, 6], [8, 6, 7]], 9))
 
-
-
 #Retornar la grandeza de una parte
 #k=cant de escenas en cada parte 
 #parte es [[7,8,9],[1,2,3], [4,5,6]]
@@ -56,7 +56,6 @@ def grandezaParte(parte, k):
    return suma_grandezas
 
 #print(grandezaParte([[1,2,3], [1,1,1], [1,1,1]], 3))
-
 
 #partes es una lista que contiene partes, ejemplo ()
 #m es la cantidad de partes que hay
@@ -87,51 +86,129 @@ def ordenarListaDePartes(partes, m, k):
 #print("partes:" , ordenarListaDePartes(partes, 4, 3))
 #print(ordenarListaDePartes([ [[2,3,2], [1,3,1]] , [[5,3,5], [3,3,3]]], 2, 2 ))
 #print(ordenarListaDePartes([ [[4, 8, 8], [3, 7,10]], [[7,7,6], [5,6,9]]], 2, 2 ))
+
+def ordenarApertura(apertura, m, k):
+    #como la apertura es una parte podemos usar ordenar parte
+    return ordenarParte(apertura, (m-1)*k)
+#print(ordenarApertura(apertura, 4, 3))
+#print(espectaculo(4, 3, apertura, partes)[0])
+#print(espectaculo(4, 3, apertura, partes)[1])
+
+###ANALISIS HASTA AQUÍ
+
+#Las primeras m-1 listas tienen k escenas (osea q son de tamaño k)
+#cada escena tiene siempre 3 numeros (osea son de tamaño 3)
+#La ultima lista siempre tendrá tamaño (m-1)*k (osea tiene (m-1)* k escenas (las escenas son de tamaño 3))
+#O((m-1)*k* 3), que es lineal en función de la cantidad total de números en las partes.
+
+def comprimir(listaDePartes, m, k):
+    numeros = []
+    # Recorrer las primeras m-1 listas que son las primeras partes
+    for i in range(m-1):
+        parte = listaDePartes[i]
+        for escena in parte:
+            numeros.extend(escena)
+
+    # Recorrer la última lista que representa la apertura
+    ultima_parte = listaDePartes[-1]
+    for i in range((m-1)*k):
+        escena = ultima_parte[i]
+        numeros.extend(escena)
+    return numeros
 """
-             m= cant de partes, sin la apertira
+             m= cant de partes
+             m-1=partes sin apertura
              k=cant de escenas en cada parte 
+             (m-1)*k 
              cada escena siempre tiene 3 animes
 """
-def ordenarApertura(apertura, m, k):
-    return ordenarParte(apertura, (m-1)*k)
+#complejidad O(n)
+#retorna el numero que más se repide en una lista
+def max(lista):
+    frecuencia = {}
+    max_frecuencia = 0
+    moda = []
+    for numero in lista:
+        frecuencia[numero] = frecuencia.get(numero, 0) + 1
+        if frecuencia[numero] > max_frecuencia:
+            max_frecuencia = frecuencia[numero]
+            moda = [numero]
+        elif frecuencia[numero] == max_frecuencia:
+            moda.append(numero)
+    return moda, max_frecuencia
 
-#print(ordenarApertura(apertura, 4, 3))
+def minimo(lista):
+    frecuencia = {}
+    min_frecuencia = float('inf')
+    moda_min = []
+
+    for numero in lista:
+        frecuencia[numero] = frecuencia.get(numero, 0) + 1
+
+    for numero, freq in frecuencia.items():
+        if freq < min_frecuencia:
+            min_frecuencia = freq
+            moda_min = [numero]
+        elif freq == min_frecuencia:
+            moda_min.append(numero)
+
+    return moda_min, min_frecuencia
+
+def animalMasYmenosRepetido(apertura, partes, m, k):
+   aperturaLen=(m-1)*k
+   partesLen=m-1
+   parteLen=k
+   nuevalista=[]
+   partes.append(apertura)
+  # print("lista convinada: " ,  partes , len(partes))
+   partes=comprimir(partes, m, k)
+   #print("lista comprimida: ", partes , len(partes))
+   return max(partes),  minimo(partes)
+
+#print(animalMasYmenosRepetido(apertura, partes , 4, 3))
 
 
+#Escena de menor y mayor grandeza. la apertura tiene todas las escenas entonces podemos buscarla ahí
+def escenaDeMenorYmayorGrandeza(apertura):
+    menor_grandeza = float('inf')
+    mayor_grandeza = float('-inf')
+    escena_menor_grandeza = None
+    escena_mayor_grandeza = None
+
+    for escena in apertura:
+        grandeza = grandezaEscena(escena)
+        if grandeza < menor_grandeza:
+            menor_grandeza = grandeza
+            escena_menor_grandeza = escena
+        if grandeza > mayor_grandeza:
+            mayor_grandeza = grandeza
+            escena_mayor_grandeza = escena
+
+    return escena_menor_grandeza, menor_grandeza, escena_mayor_grandeza, mayor_grandeza
+
+def promedioGrandezaEspectaculo(apertura, partes):
+    total_grandezas = 0
+    total_escenas = 0
+    # Calcular la suma de las grandezas de las escenas en la apertura
+    for escena in apertura:
+        total_grandezas += grandezaEscena(escena)
+        total_escenas += 1
+    # Calcular la suma de las grandezas de las escenas en las partes
+    for parte in partes:
+        for escena in parte:
+            total_grandezas += grandezaEscena(escena)
+            total_escenas += 1
+    # Calcular el promedio de grandeza
+    promedio = total_grandezas / total_escenas
+    return promedio
+
+#retorna los resultados del el espectaculo completo
 def espectaculo(m, k, apertura, partes):
-    return ordenarApertura(apertura, m, k) , ordenarListaDePartes(partes, m ,k)
+    return ordenarApertura(apertura, m, k), ordenarListaDePartes(partes, m ,k), animalMasYmenosRepetido(apertura, partes, m, k), escenaDeMenorYmayorGrandeza(apertura), promedioGrandezaEspectaculo(apertura, partes)
 
-print(espectaculo(4, 3, apertura, partes)[0])
-print(espectaculo(4, 3, apertura, partes)[1])
+print(espectaculo(4,3, apertura, partes))
 
 
-"""
-lista-> lista conformada por varias listas
-def comprimir(lista):
-    #retorna solo los elementos internos de la lista
-    return
-ejemplo comprimir([[1],[1,3,5],[[5]]]) retorne [1,1,3,5,5]
-    """
 
-def comprimir(lista):
-    resultado = []
-    for sublist in lista:
-        if isinstance(sublist, list):  # si el elemento de la lista es otra lista
-            resultado.extend(comprimir(sublist))  # llamamos recursivamente a la función para esa lista interna
-        else:
-            resultado.append(sublist)  # si no es una lista simplemente lo agregamos a la lista de resultados
-    return resultado
-print(comprimir(partes))
-
-def moda(apertura, partes):
-    completo=comprimir(apertura)+ comprimir(partes)
-    return 
-
-print(moda(apertura, partes))
-"""
-def comprimir(apertura, partes):
-    #retorna una lista con todos los elementos de apertura y partes
-    return 
-apertura son listas de este estilo [[1, 2, 3], [1, 3, 4], [1, 2, 5], [1, 2, 8], [2, 5, 7], [2, 3, 9], [4, 5, 9], [6, 7, 8], [6, 7, 9]]
-partes son listas de este estilo [[[1, 2, 3], [1, 3, 4], [1, 2, 5]], [[1, 3, 4], [2, 3, 9], [4, 5, 9]], [[1, 2, 5], [2, 5, 7], [6, 7, 9]]]
-"""
+def visualizarResultado( resultado ):
+    return resultado[0]
