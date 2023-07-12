@@ -1,24 +1,37 @@
 import algoritmosOrden
-n = 6
 
-m = 3
 
-k = 2
+"""
+#funcion: transformarArreglo
+#parametros: arreglo: el arreglo sea de numeros,
+             animales: diccionario que contiene los animales con sus respectivas grandezas
+             opcion: 'animal' transforma de animales a numeros
+                     'numero' transforma de numeros a animales
+#complejidad: O(n*m) donde n=cantidadDeSubarreglos(tamaño del arreglo), 
+                     m=tamañanoDeSubarreglo
+                     como los subarreglos siempre serán de tamaño 3 (porque cada escena tiene 3 animales)
+                     concluimos que la complejidad solo depende de n.
+                     es decir O
 
-animales = [
-    ("ciempies", 1),
-    ("libelula", 2),
-    ("gato", 3),
-    ("perro", 4),
-    ("tapir", 5),
-    ("nutria", 6)
-]
+"""
+def transformarArreglo(arreglo, animales, opcion):
+    animal_dict = dict(animales)
+    for i in range(len(arreglo)):
+        for j in range(len(arreglo[i])): #siempre se ejecuta 3 veces, no importa el tamaño de la entrada
+            elemento = arreglo[i][j]
+            if opcion == 'animal' and elemento in animal_dict:
+                arreglo[i][j] = animal_dict[elemento]
+            elif opcion == 'numero':
+                for key, value in animal_dict.items():
+                    if value == elemento:
+                        arreglo[i][j] = key
+                        break
+    return arreglo
 
-apertura = [["tapir", "nutria", "perro"], ["tapir", "perro", "gato"], ["ciempies", "tapir", "gato"], ["gato", "ciempies", "libelula"]]
+#print(transformarArreglo([["gato","libelula","ciempies"]],[("gato", 3),("libelula", 2),("ciempies", 1),("nutria", 6),("perro", 4),("tapir", 5)],'animal'))
+#print(transformarArreglo([[2,3,4],[3,4,5]],[("gato", 3),("libelula", 2),("ciempies", 1),("nutria", 6),("perro", 4),("tapir", 5)],'numero'))
 
-partes = [[['tapir', 'nutria', 'perro'],['ciempies', 'tapir', 'gato']],
-           [['gato', 'ciempies', 'libelula'],['tapir', 'perro', 'gato']]
-         ]
+
 
 def espectaculo(n,m,k,animales,apertura,partes):
     #pasar animales de apertura a numeros
@@ -50,8 +63,8 @@ def espectaculo(n,m,k,animales,apertura,partes):
     for elemento in partes:
         transformarArreglo(elemento,animales,'numero')
 
+    print("n=", n, "m=", m, "k= ", k)
     imprimir(apertura,partes,sumasDeEscenas)         
-      
     return 
 
 def imprimir(apertura,partes,sumas):
@@ -106,18 +119,6 @@ def sumasTotales(A):
     sumatorias.append(sumaParte)
   return sumatorias  
 
-#Pasar el arreglo de animales a numeros o viceversa
-def transformarArreglo(A,animales,opcion):
-    for i in range(len(A)):
-      for j in range(len(A[i])):
-        elemento = A[i][j]
-        for animal in animales:
-            if opcion == 'animal' and animal[0] == elemento:
-                A[i][j] = animal[1]
-                break
-            elif opcion == 'numero' and animal[1] == elemento:
-                A[i][j] = animal[0]
-                break
 
 #espectaculo(n,m,k,animales,apertura,partes)
 

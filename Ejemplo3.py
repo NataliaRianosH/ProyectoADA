@@ -1,5 +1,4 @@
 import main
-#EJEMPLO INPUNT2
 n = 9
 m = 4
 k = 3
@@ -24,6 +23,6 @@ parte2 = [["panteranegra", "cocodrilo", "loro"], ["leon", "panteranegra", "cebra
 
 parte3 = [["boa", "caiman", "capibara"], ["leon", "caiman", "loro"], ["leon", "cocodrilo", "boa"]]
 
-partes=[parte1,parte2,parte3]
+partes=[parte3, parte2,parte1]
 
 main.espectaculo(n,m,k,animales,apertura,partes)
