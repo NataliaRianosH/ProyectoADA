@@ -43,9 +43,6 @@ def sumaEscena(listaDeEscenas):
    return totalSumas  
 #print(sumaEscena([[1,2,3], [1,2,3]])) #[6,6]
 
-#[[24],[18]]
-#suma total de cada parte
-
 """
 #funcion: sumasTotales(listaDePartes)-> lista con la grandeza total de cada parte
 #parametros: listaDeParte: Es la lista que contiene todas las partes del acto, cada una de estas partes
@@ -58,17 +55,79 @@ def sumasTotales(listaDePartes):
         sumaParte = sum(sumaEscena(parte)) 
         sumatorias.append(sumaParte)
     return sumatorias  
-print(sumasTotales([ [[1,2,3],[2,3,4]] , [[1,2,3]] ]))
+#print(sumasTotales([ [[1,2,3],[2,3,4]] , [[1,2,3]] ])) #[15,6]
+
+"""
+#funcion: animalMasRepetido(apertura, partes)-> el animal que más se repite teniendo en cuenta apertura y partes
+#parametros: apertura: Lista que contiene la apertura
+             partes: Lista que contiene las partes
+#complejidad: O(n)
+"""
+def animalMasRepetido(apertura, partes):
+    conteo_animales = {}
+
+    def contar_animales(escenas):
+        for escena in escenas:
+            for animal in escena:
+                if animal in conteo_animales:
+                    conteo_animales[animal] += 1
+                else:
+                    conteo_animales[animal] = 1
+
+    contar_animales(apertura)
+
+    for parte in partes:
+        contar_animales(parte)
+
+    max_repeticiones = max(conteo_animales.values())
+    animales_mas_repetidos = [animal for animal, repeticiones in conteo_animales.items() if repeticiones == max_repeticiones]
+
+    return animales_mas_repetidos, max_repeticiones
+
+print(animalMasRepetido([[1,2,3]], [ [[1,2,3], [1,2,6]], [[4,3,6]]]))
+"""
+lo mismo anterior solo que selecciona el que menos se repite
+"""
+def animalMenosRepetido(apertura, partes):
+    conteo_animales = {}
+
+    def contar_animales(escenas):
+        for escena in escenas:
+            for animal in escena:
+                if animal in conteo_animales:
+                    conteo_animales[animal] += 1
+                else:
+                    conteo_animales[animal] = 1
+
+    contar_animales(apertura)
+
+    for parte in partes:
+        contar_animales(parte)
+
+    min_repeticiones = min(conteo_animales.values())
+    animales_menos_repetidos = [animal for animal, repeticiones in conteo_animales.items() if repeticiones == min_repeticiones]
+
+    return animales_menos_repetidos, min_repeticiones
+
+#print(animalMenosRepetido([[1,2,3]], [ [[1,2,3], [1,2,6]], [[4,3,6]]]))
+
+
 
 """
 #funcion: espectaculo
+#parametros: n=cant de animales
+             m= cant de partes, sin la apertira
+             k=cant de escenas en cada parte 
+             cada escena siempre tiene 3 animes
 """
 def espectaculo(n,m,k,animales,apertura,partes):
+    
     #pasar animales de apertura a numeros
     transformarArreglo(apertura,animales,'animal')
     #pasar aniamles del arreglo partes a numeros
     for parte in partes:
        transformarArreglo(parte,animales,'animal')
+    
     #Ordenar escenas de apertura de acuerdo a la suma de grandezas de cada escena
     sumasDeEscenas= sumaEscena(apertura)
     algoritmosOrden.insertion_sort(apertura,sumasDeEscenas)
@@ -93,7 +152,6 @@ def espectaculo(n,m,k,animales,apertura,partes):
     for elemento in partes:
         transformarArreglo(elemento,animales,'numero')
 
-    print("n=", n, "m=", m, "k= ", k)
     imprimir(apertura,partes,sumasDeEscenas)         
     return 
 
@@ -117,7 +175,7 @@ def imprimir(apertura,partes,sumas):
            mayor= sumas[j]   
     menor= apertura[sumas.index(menor)]
     mayor= apertura[sumas.index(mayor)]
-
+    print("la apertura es: ", apertura)
     masRepetidos, max = animalMasRepetido(apertura, partes)
     print("\nEl animal que participo en mas escenas dentro del espectaculo fue", ", ".join(masRepetidos), "con", max, "escenas.")
     
@@ -130,58 +188,35 @@ def imprimir(apertura,partes,sumas):
     return
 
 #espectaculo(n,m,k,animales,apertura,partes)
-
-def animalMasRepetido(apertura, partes):
-    conteo_animales = {}
-    # Contar la cantidad de veces que aparece cada animal en la apertura
-    for escena in apertura:
-        for animal in escena:
-            if animal in conteo_animales:
-                conteo_animales[animal] += 1
-            else:
-                conteo_animales[animal] = 1
-    # Contar la cantidad de veces que aparece cada animal en las partes
+"""
+def masRepetido(lista):
+    contador = {}
+    max_repetido = 0
     
-    for parte in partes:
-        for escena in parte:
-            for animal in escena:
-                if animal in conteo_animales:
-                    conteo_animales[animal] += 1
-                else:
-                    conteo_animales[animal] = 1
+    for numero in lista:
+        if numero in contador:
+            contador[numero] += 1
+        else:
+            contador[numero] = 1
+        
+        if contador[numero] > max_repetido:
+            max_repetido = contador[numero]
+    
+    numeros_repetidos = [numero for numero, count in contador.items() if count == max_repetido]
+    
+    if len(numeros_repetidos) == 1:
+        return numeros_repetidos[0], max_repetido
+    else:
+        return numeros_repetidos, max_repetido
+def animalMasRepetido(apertura, partes):
+    todas_las_escenas = apertura + partes
+    todos_los_numeros = []
+    for escena in todas_las_escenas:
+        for numero in escena:
+            todos_los_numeros.append(numero)
+    return masRepetido(todos_los_numeros)
+    print(masRepetido([1, 2, 3, 1, 2, 3, 1, 2, 6, 4, 3, 6]))  # ([1, 2, 3], 3)
 
-    # Encontrar la cantidad máxima de repeticiones
-    max_repeticiones = max(conteo_animales.values())
 
-    # Obtener los animales con la cantidad máxima de repeticiones
-    animales_mas_repetidos = [animal for animal, repeticiones in conteo_animales.items() if repeticiones == max_repeticiones]
-
-    return animales_mas_repetidos, max_repeticiones
-
-def animalMenosRepetido(apertura, partes):
-    conteo_animales = {}
-
-    # Contar la cantidad de veces que aparece cada animal en la apertura
-    for escena in apertura:
-        for animal in escena:
-            if animal in conteo_animales:
-                conteo_animales[animal] += 1
-            else:
-                conteo_animales[animal] = 1
-
-    # Contar la cantidad de veces que aparece cada animal en las partes
-    for parte in partes:
-        for escena in parte:
-            for animal in escena:
-                if animal in conteo_animales:
-                    conteo_animales[animal] += 1
-                else:
-                    conteo_animales[animal] = 1
-
-    # Encontrar la cantidad mínima de repeticiones
-    min_repeticiones = min(conteo_animales.values())
-
-    # Obtener los animales con la cantidad mínima de repeticiones
-    animales_menos_repetidos = [animal for animal, repeticiones in conteo_animales.items() if repeticiones == min_repeticiones]
-
-    return animales_menos_repetidos, min_repeticiones
+    
+"""

@@ -19,10 +19,14 @@ animales = [
 apertura = [["caiman","capibara","loro"], ["boa","caiman","capibara"], ["cocodrilo","capibara","loro"], 
            ["pantera negra","cocodrilo","loro"], ["tigre","loro","capibara"], ["leon","caiman","loro"], 
            ["leon","cocodrilo","boa"], ["leon","pantera negra","cebra"], ["tigre","cebra","pantera negra"]]
-
 parte1=[["caiman","capibara","loro"],["tigre","loro","capibara"], ["tigre","cebra","pantera negra"]]
 parte2=[["pantera negra","cocodrilo","loro"], ["leon","pantera negra","cebra"], ["cocodrilo","capibara","loro"]]
 parte3=[["boa","caiman","capibara"], ["leon","caiman","loro"], ["leon","cocodrilo","boa"]]
+print("traduccion: ", main.transformarArreglo(apertura,animales,'animal'))
+print("traduccion c: ", main.transformarArreglo(
+         [["boa","caiman","capibara"], ["leon","caiman","loro"], ["leon","cocodrilo","boa"]], animales,'animal'))
+
+
 partes = [parte1, parte2, parte3]
 
 main.espectaculo(n,m,k,animales,apertura,partes)
