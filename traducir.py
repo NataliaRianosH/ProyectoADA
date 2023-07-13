@@ -15,17 +15,18 @@ partes=[parte1,parte2,parte3]
 
 """
   m= cant de partes
-             m-1=partes sin apertura
-             k=cant de escenas en cada parte 
-             (m-1)*k 
-             cada escena siempre tiene 3 animes
+  m-1=partes sin apertura
+  k=cant de escenas en cada parte 
+  (m-1)*k 
+  cada escena siempre tiene 3 animes
 """
-
+#complejidad O(n), con respecto a la cantidad de animales
 def numeroToAnimal(animales, grandezas, grandeza):
     animal_index = grandezas.index(grandeza)
     animal = animales[animal_index]
     return animal
 
+#complejidad O(n*tamañolista), lineal con respecto al tamaño de la lista
 def lista(animales, grandezas, numeros, tamañoLista):
     listaTraducida = []
     for i in range(tamañoLista):
@@ -35,6 +36,7 @@ def lista(animales, grandezas, numeros, tamañoLista):
     texto = ", ".join(listaTraducida)
     return texto
 
+#complejidad O(1), constante
 def escenaToAnimal(animales, grandezas, escena):
     #las escenas tienen tamaño 3 siempre
     escenaTraducida = [
@@ -44,17 +46,19 @@ def escenaToAnimal(animales, grandezas, escena):
     ]
     return escenaTraducida
 
-#recuerde que k es el numero de escenas que tiene la parte a traducir
+#complejidad O(k), lineal con respecto a K
 def parteToAnimal(animales, grandezas, parte, k):
+    #recuerde que k es el numero de escenas que tiene la parte a traducir
     parteTraducida = []
     for i in range(k):
         escena = parte[i]
-        escenaTraducida = escenaToAnimal(animales, grandezas, escena)
+        escenaTraducida = escenaToAnimal(animales, grandezas, escena) #complejidad O(1) 
         parteTraducida.append(escenaTraducida)
     return parteTraducida
 
-#recuerde que m es el tamaño del arreglo de partes
+#Complejidad O(m * k), lineal  con respecto al número de escenas.
 def listaDePartesToAnimal(animales, grandezas, listaDePartes, m, k):
+    #recuerde que m es el tamaño del arreglo de partes
     m=m-1
     listaTraducida = []
     for i in range(m):
@@ -62,11 +66,15 @@ def listaDePartesToAnimal(animales, grandezas, listaDePartes, m, k):
         listaTraducida.append(parteTraducida)
     return listaTraducida
 
+###################################################################################################
+
+#complejidad O(n), con respecto a la cantidad de animales
 def animalToGrandeza(animales, grandezas, animal):
     animal_index = animales.index(animal)
     grandeza = grandezas[animal_index]
     return grandeza
 
+#complejidad O(1), constante porque la escena siempre tendrá tamaño 3
 def EscenaToGrandeza(animales, grandezas, escena):
     escenaTraducida = [
         animalToGrandeza(animales, grandezas, animal)
@@ -74,6 +82,7 @@ def EscenaToGrandeza(animales, grandezas, escena):
     ]
     return escenaTraducida
 
+#O(k*n) lineal con respecto a k
 def parteToGrandeza(animales, grandezas, parte, k):
     parteTraducida = []
     for i in range(k):
@@ -82,6 +91,7 @@ def parteToGrandeza(animales, grandezas, parte, k):
         parteTraducida.append(escenaTraducida)
     return parteTraducida
 
+#Complejidad O(m * k), lineal  con respecto al número de escenas.
 def listaDePartesToGrandeza(animales, grandezas, listaDePartes, m, k):
     m=m-1
     listaTraducida = []
