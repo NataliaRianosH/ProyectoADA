@@ -38,7 +38,7 @@ def escena(numeros):
             nums[0], nums[1] = nums[1], nums[0]
     return nums
 
-
+# O(k^2), cuadratica con respecto a K
 def parte(parte, k):
     for i in range(k):
         parte[i] = escena(parte[i])
@@ -54,6 +54,7 @@ def parte(parte, k):
                     parte[i], parte[j] = parte[j], parte[i]
     return parte
 
+#O(m^2 * k), cuadratica con respecto a m y lineal con respecto a k
 def listaDePartes(partes, m, k):
     m=m-1
     for i in range(m):
@@ -72,6 +73,7 @@ def listaDePartes(partes, m, k):
         partes[i], partes[max_index] = partes[max_index], partes[i]
     return partes
 
+#O((m-1)*k), lineal con respecto a k
 def apertura(apertura, m, k):
     #como la apertura es una parte podemos usar ordenar parte
     parte(apertura, (m-1)*k)
