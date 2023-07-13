@@ -40,18 +40,13 @@ partes=[parte2,parte3,parte1]
  
 def espectaculo(n, m, k, animales, grandezas, apertura, partes):
    start_time = time.time()
-   aperturaLen=(m-1)*k
-   partesLen=m-1
-   parteLen=k
-   escenasLen=3
-
-   #traducir entradas:
+   #traducir entradas: O((m-1)*k)
    apertura=traducir.parteToGrandeza(animales, grandezas, apertura, (m-1)*k)
    partes=traducir.listaDePartesToGrandeza(animales, grandezas , partes, m, k)
 
    #ordenar:
    ordenar.parte(apertura, (m-1)*k)
-   #imprimir
+   #imprimir O(1)
    print("El orden en el que se debe presentar el espectaculo es")
    print("Apertura= ", traducir.parteToAnimal(animales, grandezas,apertura,(m-1)*k))
    
