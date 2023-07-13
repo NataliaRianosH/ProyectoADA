@@ -14,24 +14,26 @@ parte3= [[4, 3, 1], [9, 3, 2], [9, 5, 4]]
 partes=[parte1,parte2,parte3]
 partes2=[parte1,parte2,parte3,apertura]
 
-
-#debe entrar la convinación de partes con apertura:
+#Complejidad: O((m-1) * k^2)
 def comprimir(listaDePartes, m, k):
     numeros = []
     # Recorrer las primeras m-1 listas que son las primeras partes
+    #O((m-1) * k) * O(k) = O((m-1) * k^2)
     for i in range(m-1):
         parte = listaDePartes[i]
         for escena in parte:
-            numeros.extend(escena)
+            numeros.extend(escena) #O(k)
 
     # Recorrer la última lista que representa la apertura
     ultima_parte = listaDePartes[-1]
+    #O((m-1) * k) * O(k) = O((m-1) * k^2)
     for i in range((m-1)*k):
         escena = ultima_parte[i]
         numeros.extend(escena)
     return numeros
 
 #encuentra el maximo de una lista
+#O(n), depende del tamaño de la lista
 def maximo(lista):
     frecuencia = {}
     max_frecuencia = 0
@@ -46,6 +48,8 @@ def maximo(lista):
     return moda, max_frecuencia
 
 #encuentra el minimo de una lista
+
+#O(n), depende del tamaño de la lista
 def minimo(lista):
     frecuencia = {}
     min_frecuencia = float('inf')
@@ -60,22 +64,26 @@ def minimo(lista):
             moda_min.append(numero)
     return moda_min, min_frecuencia
 
+# O((m-1) * k^2) dominada por la funcion de comprimir
 def animalMasYmenosRepetido(apertura, partes, m, k):
-   aperturaAux=apertura[:]
-   partesAux=partes[:]
-   partesAux.append(aperturaAux)
+   #crear la copia tiene complejidad:
+   aperturaAux=apertura[:] #O((m-1)*k)
+   partesAux=partes[:] #O(k)
+   partesAux.append(aperturaAux) #O(1)
   # print("lista convinada: " ,  partes , len(partes))
-   partesAux=comprimir(partesAux, m, k)
+   partesAux=comprimir(partesAux, m, k) # O((m-1) * k^2)
   # print("lista comprimida: ", partesAux , len(partesAux))
    return maximo(partesAux), minimo(partesAux)
 
 #Escena de menor y mayor grandeza. la apertura tiene todas las escenas entonces podemos buscarla ahí
+#O(n)
 def escenaDeMenorYmayorGrandeza(apertura):
+    #O(1)
     menor_grandeza = float('inf')
     mayor_grandeza = float('-inf')
     escenas_menor_grandeza = []
     escenas_mayor_grandeza = []
-
+    #O(n), n tamaño de apertura
     for escena in apertura:
         grand = grandeza.escena(escena)
         if grand < menor_grandeza:
@@ -90,7 +98,7 @@ def escenaDeMenorYmayorGrandeza(apertura):
             escenas_mayor_grandeza.append(escena)
     
     return (escenas_menor_grandeza, menor_grandeza), (escenas_mayor_grandeza, mayor_grandeza)
-
+#O(n + m)
 def promedioGrandezaEspectaculo(apertura, partes):
     total_grandezas = 0
     total_escenas = 0

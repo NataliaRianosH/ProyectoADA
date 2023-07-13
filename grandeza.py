@@ -5,7 +5,7 @@
 #parametros: escena: es una lista de 3 numeros, cada numero representa la grandeza de un animal
 #objetivo: calcular la grandeza total de una escena. La grandeza total de una escena es igual a
            sumar las grandezas de cada animal que la compone
-#complejidad: O(1), las escena siempre tendran 
+#complejidad: O(1), las escena siempre tendran tamaño 3
 """
 def escena(escena):
    return escena[0]+ escena[1]+ escena[2]
