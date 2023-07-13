@@ -1,6 +1,7 @@
 import traducir 
 import ordenar 
 import seleccionar 
+import time
 #Para hacer pruebas:
 n = 9
 m = 4
@@ -36,7 +37,9 @@ parte3 = [['boa', 'caiman', 'capibara'], ['leon', 'caiman', 'loro'], ['leon', 'c
 
 partes=[parte2,parte3,parte1]
 
+ 
 def espectaculo(n, m, k, animales, grandezas, apertura, partes):
+   start_time = time.time()
    aperturaLen=(m-1)*k
    partesLen=m-1
    parteLen=k
@@ -69,7 +72,8 @@ def espectaculo(n, m, k, animales, grandezas, apertura, partes):
    #El promedio de grandeza de todo el espectaculo fue de 
 
    print("El promedio de grandeza de todo el espectaculo fue de ", seleccionar.promedioGrandezaEspectaculo(apertura, partes))
-   return 
+   end_time = time.time()
+   return end_time - start_time 
 
 #espectaculo(n, m, k, animales, grandezas, apertura, partes)
    

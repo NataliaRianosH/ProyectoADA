@@ -17,3 +17,5 @@ parte3 = [["boa", "caiman", "capibara"], ["leon", "caiman", "loro"], ["leon", "c
 partes = [parte1, parte2, parte3]
 
 solucion.espectaculo(n, m, k, animales, grandezas, apertura, partes)
+tiempo = solucion.espectaculo(n, m, k, animales, grandezas, apertura, partes)
+print(tiempo)

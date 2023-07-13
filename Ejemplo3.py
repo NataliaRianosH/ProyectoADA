@@ -15,4 +15,5 @@ parte2 = [["gato", "ciempies", "libelula"], ["tapir", "perro", "gato"]]
 
 partes = [parte1, parte2]
 
-solucion.espectaculo(n, m, k, animales, grandezas, apertura, partes)
+tiempo = solucion.espectaculo(n, m, k, animales, grandezas, apertura, partes)
+print(tiempo)
