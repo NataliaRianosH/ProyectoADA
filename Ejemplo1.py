@@ -1,32 +1,17 @@
-import main 
+import solucion as solucion
+import traducir as traducir
+#EJEMPLO 1 DEL ENUNCIADO
+n = 6
+m = 3
+k = 2
 
-n = 9
-m = 4
-k = 3
+animales = [ "ciempies", "libelula","gato", "perro", "tapir", "nutria"]
+grandezas= [1,2,3,4,5,6]
 
-animales = [
-    ("capibara", 1),
-    ("loro", 2),
-    ("caiman", 3),
-    ("boa", 4),
-    ("cocodrilo", 5),
-    ("cebra", 6),
-    ("pantera negra", 7),
-    ("tigre", 8),
-    ("leon", 9)
-]
+apertura= [["tapir", "nutria", "perro"], ["tapir", "perro", "gato"], ["ciempies", "tapir", "gato"], ["gato", "ciempies", "libelula"]]
+parte1= [["tapir", "nutria", "perro"], ["ciempies", "tapir", "gato"]]
+parte2= [["gato", "ciempies", "libelula"], ["tapir", "perro", "gato"]]
 
-apertura = [["caiman","capibara","loro"], ["boa","caiman","capibara"], ["cocodrilo","capibara","loro"], 
-           ["pantera negra","cocodrilo","loro"], ["tigre","loro","capibara"], ["leon","caiman","loro"], 
-           ["leon","cocodrilo","boa"], ["leon","pantera negra","cebra"], ["tigre","cebra","pantera negra"]]
+partes = [parte1, parte2]
 
-parte1=[["caiman","capibara","loro"],["tigre","loro","capibara"], ["tigre","cebra","pantera negra"]]
-parte2=[["pantera negra","cocodrilo","loro"], ["leon","pantera negra","cebra"], ["cocodrilo","capibara","loro"]]
-parte3=[["boa","caiman","capibara"], ["leon","caiman","loro"], ["leon","cocodrilo","boa"]]
-print("traduccion: ", main.transformarArreglo(apertura,animales,'animal'))
-print("traduccion c: ", main.transformarArreglo(parte3, animales,'animal'))
-
-
-partes = [parte1, parte2, parte3]
-
-main.espectaculo(n,m,k,animales,apertura,partes)
+solucion.espectaculo(n, m, k, animales, grandezas, apertura, partes)

@@ -1,28 +1,18 @@
-import main
-n = 9
-m = 4
-k = 3
+import solucion
+#ejemplo input1
+n = 6
+m = 3
+k = 2
 
-animales = [
-    ("leon", 9),
-    ("panteranegra", 7),
-    ("cebra", 6),
-    ("cocodrilo", 5),
-    ("boa", 4),
-    ("loro", 2),
-    ("caiman", 3),
-    ("tigre", 8),
-    ("capibara", 1)
-]
+animales = ["gato", "libelula", "ciempies", "nutria", "perro", "tapir"]
+grandezas = [3, 2, 1, 6, 4, 5]
 
-apertura = [["caiman", "capibara", "loro"], ["boa", "caiman", "capibara"], ["cocodrilo", "capibara", "loro"], ["panteranegra", "cocodrilo", "loro"], ["tigre", "loro", "capibara"], ["leon", "caiman", "loro"], ["leon", "cocodrilo", "boa"], ["leon", "panteranegra", "cebra"], ["tigre", "cebra", "panteranegra"]]
+apertura = [["tapir", "nutria", "perro"], ["tapir", "perro", "gato"], ["ciempies", "tapir", "gato"],
+            ["gato", "ciempies", "libelula"]]
 
-parte1 = [["caiman", "capibara", "loro"], ["tigre", "loro", "capibara"], ["tigre", "cebra", "panteranegra"]]
+parte1 = [["tapir", "nutria", "perro"], ["ciempies", "tapir", "gato"]]
+parte2 = [["gato", "ciempies", "libelula"], ["tapir", "perro", "gato"]]
 
-parte2 = [["panteranegra", "cocodrilo", "loro"], ["leon", "panteranegra", "cebra"], ["cocodrilo", "capibara", "loro"]]
+partes = [parte1, parte2]
 
-parte3 = [["boa", "caiman", "capibara"], ["leon", "caiman", "loro"], ["leon", "cocodrilo", "boa"]]
-
-partes=[parte3, parte2,parte1]
-
-main.espectaculo(n,m,k,animales,apertura,partes)
+solucion.espectaculo(n, m, k, animales, grandezas, apertura, partes)
